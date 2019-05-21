@@ -1,0 +1,9 @@
+server:
+  port: 8180
+
+spring:
+  datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://47.101.170.197/sign_in?useUnicode=true&characterEncoding=utf-8
+        username: root
+        password: sun+123
