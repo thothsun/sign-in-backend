@@ -18,8 +18,8 @@ public class QrCodeController {
 
     @GetMapping(path = "/serial")
     @ResponseBody
-    public Response getQrCodeSerial() {
-        return new Response<>(APICode.SUCCESS, qrCodeService.getQrCodeSerial());
+    public Response getQrCodeSerial(@RequestParam("description") String description) {
+        return new Response<>(APICode.SUCCESS, qrCodeService.getQrCodeSerial(description));
     }
 
     @ResponseBody

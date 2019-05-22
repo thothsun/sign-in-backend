@@ -3,14 +3,20 @@ package com.suns.signin.qrcode;
 /**
  * Created by sunshuai on 2019/5/22
  */
-public class SerialResponse {
+public class QrCode {
     private Integer serial;
+    private String description;
 
-    public SerialResponse() {
+    public QrCode() {
     }
 
-    public SerialResponse(Integer serial) {
+    public QrCode(String description) {
+        this.description = description;
+    }
+
+    public QrCode(Integer serial, String description) {
         this.serial = serial;
+        this.description = description;
     }
 
     public Integer getSerial() {

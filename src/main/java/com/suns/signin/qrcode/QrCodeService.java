@@ -1,5 +1,6 @@
 package com.suns.signin.qrcode;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -8,10 +9,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class QrCodeService {
 
+    @Autowired
+    QrCodeMapper qrCodeMapper;
 
-    public SerialResponse getQrCodeSerial(){
-
-        return new SerialResponse("111");
+    public SerialResponse getQrCodeSerial(String description) {
+        QrCode qrCode = new QrCode(description);
+        qrCodeMapper.addQrCode(qrCode);
+        return new SerialResponse(qrCode.getSerial());
     }
 
 
