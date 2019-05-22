@@ -15,7 +15,7 @@ public class QrCodeService {
     }
 
 
-    public void signin(String stuID, String stuName, String qrcodeSerial) {
+    public void signin(String stuID, String stuName, String openid, String qrcodeSerial) {
 
         System.out.println(stuID + "," + stuName + "," + qrcodeSerial);
 

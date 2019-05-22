@@ -6,13 +6,15 @@ package com.suns.signin.qrcode;
 public class Student {
     private String stuID;
     private String stuName;
+    private String openid;
 
     public Student() {
     }
 
-    public Student(String stuID, String stuName) {
+    public Student(String stuID, String stuName, String openid) {
         this.stuID = stuID;
         this.stuName = stuName;
+        this.openid = openid;
     }
 
     public String getStuID() {
@@ -29,5 +31,13 @@ public class Student {
 
     public void setStuName(String stuName) {
         this.stuName = stuName;
+    }
+
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
     }
 }

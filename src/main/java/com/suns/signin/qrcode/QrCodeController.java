@@ -27,7 +27,8 @@ public class QrCodeController {
     public Response login(@RequestBody Student student, @RequestParam("serial") String serial) throws BaseException {
         String stuID = student.getStuID();
         String stuName = student.getStuName();
-        qrCodeService.signin(stuID, stuName, serial);
+        String openid = student.getOpenid();
+        qrCodeService.signin(stuID, stuName, openid, serial);
         return new Response<>(APICode.SUCCESS);
     }
 }
