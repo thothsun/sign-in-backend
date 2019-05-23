@@ -14,22 +14,6 @@
             height: 100%;
         }
 
-        body {
-            display: -ms-flexbox;
-            display: -webkit-box;
-            display: flex;
-            -ms-flex-align: center;
-            -ms-flex-pack: center;
-            -webkit-box-align: center;
-            align-items: center;
-            -webkit-box-pack: center;
-            justify-content: center;
-            padding-top: 40px;
-            padding-bottom: 40px;
-            background-color: #f5f5f5;
-        }
-
-
 
 
     </style>
@@ -38,60 +22,58 @@
 <main role="main" class="container">
 
     <div id="app" style="text-align: center">
-        <h2>我发起的签到</h2>
+        <h2 v-cloak>{{teacher}}发起的签到</h2>
 
-        <table class="table table-bordered table-condensed table-hover">
-            <tr>
-                <th>serial</th>
-                <th>description</th>
-                <th>qrcode</th>
-            </tr>
-            <tr v-for="(content,index) in contents">
-                <td>{{content.id}}</td>
-                <td><textarea v-model="content.wxKey" readonly="readonly"></textarea></td>
-                <td><textarea cols="100" rows="5" v-model="content.wxValue"></textarea></td>
-                <td style="width: 200px">
-                    <button class="btn btn-primary" @click="update_content(index)">保存修改</button>
-                    <button class="btn btn-danger" @click="delete_content(content.wxKey)">删除</button>
-                </td>
-            </tr>
-        </table>
+        <!--<table class="table table-bordered table-condensed table-hover">-->
+        <!--<tr>-->
+        <!--<th>serial</th>-->
+        <!--<th>description</th>-->
+        <!--<th>qrcode</th>-->
+        <!--</tr>-->
+        <!--<tr v-for="(content,index) in contents">-->
+        <!--<td>{{content.id}}</td>-->
+        <!--<td><textarea v-model="content.wxKey" readonly="readonly"></textarea></td>-->
+        <!--<td><textarea cols="100" rows="5" v-model="content.wxValue"></textarea></td>-->
+        <!--<td style="width: 200px">-->
+        <!--<button class="btn btn-primary" @click="update_content(index)">保存修改</button>-->
+        <!--<button class="btn btn-danger" @click="delete_content(content.wxKey)">删除</button>-->
+        <!--</td>-->
+        <!--</tr>-->
+        <!--</table>-->
 
-        <div class="modal fade" id="modal_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel1">发起签到</h4>
-                    </div>
-
-                    <div id="new_item" class="modal-body">
-
-                        key：
-                        <input type="text" v-model="key_new_item" required><br><br>
-
-                        value：
-                        <input type="text" v-model="value_new_item" required><br><br>
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button class="btn btn-primary" @click="add_content">保存</button>
-                    </div>
+        <!--<div class="modal fade" id="modal_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"-->
+        <!--aria-hidden="true">-->
+        <!--<div class="modal-dialog">-->
+        <!--<div class="modal-content">-->
 
 
-                </div>
-            </div>
-        </div>
+        <!--<div class="modal-header">-->
+        <!--<h4 class="modal-title" id="myModalLabel1">发起签到</h4>-->
+        <!--</div>-->
 
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modal_add">发起新的签到</button>
+        <!--<div id="new_item" class="modal-body">-->
+
+        <!--key：-->
+        <!--<input type="text" v-model="key_new_item" required><br><br>-->
+
+        <!--value：-->
+        <!--<input type="text" v-model="value_new_item" required><br><br>-->
+
+        <!--</div>-->
+
+        <!--<div class="modal-footer">-->
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+        <!--<button class="btn btn-primary" @click="add_content">保存</button>-->
+        <!--</div>-->
+
+
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+
+        <!--<button class="btn btn-primary" data-toggle="modal" data-target="#modal_add">发起新的签到</button>-->
 
     </div>
-
-
 
 
 </main>
@@ -115,11 +97,41 @@
     new Vue({
         el: '#app',
         data: {
-
+            teacher: ''
         },
         methods: {
 
+            getAllSign: function () {
+                axios.get('/qrcode/all', {
+                    teacher: this.teacher
+                }).then(function (result) {
+                    console.log(result.data.code);
+                    if (result.data.code === 0) {
+                        alert("");
+                    } else if (result.data.code === 20002) {
+                        alert("");
+                    } else if (result.data.code === 20003) {
+                        alert("");
+                    }
+                }).catch(function (reason) {
+                    alert("查询失败，网络异常");
+                    console.log(reason);
+                });
+            },
 
         },
+        created: function () {
+            console.log(this.teacher)
+            console.log(getCookie('teacher'));
+            this.teacher = getCookie('teacher')
+        }
     })
+
+    function getCookie(name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr = document.cookie.match(reg))
+            return unescape(arr[2]);
+        else
+            return null;
+    }
 </script>

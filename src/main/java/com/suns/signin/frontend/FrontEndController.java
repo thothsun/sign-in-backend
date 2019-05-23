@@ -2,6 +2,7 @@ package com.suns.signin.frontend;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -11,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class FrontEndController {
 
     @GetMapping(path = "/")
-    public String login(){
-        return "login";
+    public String login() {
+        return "login.html";
     }
 
     @GetMapping(path = "/manage")
-    public String manage(){
-        return "manage";
+    public String manage() {
+        return "manage.html";
     }
 
 }

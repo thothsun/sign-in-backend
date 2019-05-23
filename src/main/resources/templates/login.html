@@ -98,11 +98,12 @@
                 axios.post('/teacher/login', {
                     username: this.username,
                     password: this.password
-                }).then(function (result) {
+                }).then((result) => {
                     console.log(result.data.code);
                     if (result.data.code === 0) {
                         alert("登录成功");
-                        window.location.href='/manage';
+                        setCookie("teacher",this.username);
+                        window.location.href = '/manage';
                     } else if (result.data.code === 20002) {
                         alert("用户不存在");
                     } else if (result.data.code === 20003) {
@@ -115,6 +116,17 @@
             },
             register: function () {
             },
+            setCookie: function (cname, cvalue) {
+                document.cookie = cname + "=" + cvalue;
+            }
         },
     })
+
+    function setCookie(name,value)
+    {
+        var Days = 30;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days*24*60*60*1000);
+        document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+    }
 </script>
