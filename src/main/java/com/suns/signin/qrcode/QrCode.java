@@ -6,6 +6,7 @@ package com.suns.signin.qrcode;
 public class QrCode {
     private Integer serial;
     private String description;
+    private String teacher;
 
     public QrCode() {
     }
@@ -14,9 +15,10 @@ public class QrCode {
         this.description = description;
     }
 
-    public QrCode(Integer serial, String description) {
+    public QrCode(Integer serial, String description, String teacher) {
         this.serial = serial;
         this.description = description;
+        this.teacher = teacher;
     }
 
     public Integer getSerial() {
@@ -25,5 +27,21 @@ public class QrCode {
 
     public void setSerial(Integer serial) {
         this.serial = serial;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(String teacher) {
+        this.teacher = teacher;
     }
 }

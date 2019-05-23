@@ -16,12 +16,14 @@ public class QrCodeController {
     @Autowired
     private QrCodeService qrCodeService;
 
+    //教师发起新的签到
     @GetMapping(path = "/serial")
     @ResponseBody
     public Response getQrCodeSerial(@RequestParam("description") String description) {
         return new Response<>(APICode.SUCCESS, qrCodeService.getQrCodeSerial(description));
     }
 
+    //学生扫码签到
     @ResponseBody
     @PostMapping(path = "/signin")
     public Response signin(@RequestBody Student student, @RequestParam("serial") String serial) throws BaseException {
@@ -30,5 +32,12 @@ public class QrCodeController {
         String openid = student.getOpenid();
         qrCodeService.signin(stuID, stuName, openid, serial);
         return new Response<>(APICode.SUCCESS);
+    }
+
+    //教师查询所有的签到
+    @GetMapping(path = "/all")
+    @ResponseBody
+    public Response getAllSign(@RequestParam("teacher") String teacher) throws BaseException{
+        return new Response<>(APICode.SUCCESS,qrCodeService.getAllSign(teacher));
     }
 }

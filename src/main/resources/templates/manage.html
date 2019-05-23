@@ -35,11 +35,66 @@
     </style>
 </head>
 <body class="text-center">
-<div class="container" id="app">
+<main role="main" class="container">
+
+    <div id="app" style="text-align: center">
+        <h2>我发起的签到</h2>
+
+        <table class="table table-bordered table-condensed table-hover">
+            <tr>
+                <th>serial</th>
+                <th>description</th>
+                <th>qrcode</th>
+            </tr>
+            <tr v-for="(content,index) in contents">
+                <td>{{content.id}}</td>
+                <td><textarea v-model="content.wxKey" readonly="readonly"></textarea></td>
+                <td><textarea cols="100" rows="5" v-model="content.wxValue"></textarea></td>
+                <td style="width: 200px">
+                    <button class="btn btn-primary" @click="update_content(index)">保存修改</button>
+                    <button class="btn btn-danger" @click="delete_content(content.wxKey)">删除</button>
+                </td>
+            </tr>
+        </table>
+
+        <div class="modal fade" id="modal_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel1">发起签到</h4>
+                    </div>
+
+                    <div id="new_item" class="modal-body">
+
+                        key：
+                        <input type="text" v-model="key_new_item" required><br><br>
+
+                        value：
+                        <input type="text" v-model="value_new_item" required><br><br>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button class="btn btn-primary" @click="add_content">保存</button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" data-toggle="modal" data-target="#modal_add">发起新的签到</button>
+
+    </div>
 
 
 
-</div>
+
+</main>
 
 <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"
