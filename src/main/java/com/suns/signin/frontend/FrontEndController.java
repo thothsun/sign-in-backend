@@ -15,4 +15,9 @@ public class FrontEndController {
         return "login";
     }
 
+    @GetMapping(path = "/manage")
+    public String manage(){
+        return "manage";
+    }
+
 }
