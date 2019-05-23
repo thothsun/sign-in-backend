@@ -11,6 +11,6 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface TeacherMapper {
 
-    @Select("select user_name,pass from tb_teacher where user_name = #{username}")
-    Teacher getTeachersByUsername(@Param("uaername") String username);
+    @Select("select user_name,password from tb_teacher where user_name = #{username}")
+    Teacher getTeachersByUsername(@Param("username") String username);
 }
