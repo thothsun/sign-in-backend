@@ -15,14 +15,14 @@
         }
 
 
-
     </style>
 </head>
 <body class="text-center">
 <main role="main" class="container">
 
     <div id="app" style="text-align: center">
-        <h2 v-cloak>{{teacher}}发起的签到</h2>
+        <h2>{{teacher}}发起的签到</h2>
+        <p>{{allsign}}</p>
 
         <!--<table class="table table-bordered table-condensed table-hover">-->
         <!--<tr>-->
@@ -97,21 +97,21 @@
     new Vue({
         el: '#app',
         data: {
-            teacher: ''
+            teacher: '',
+            allsign: null,
         },
         methods: {
 
             getAllSign: function () {
                 axios.get('/qrcode/all', {
-                    teacher: this.teacher
-                }).then(function (result) {
-                    console.log(result.data.code);
+                    params: {
+                        teacher: this.teacher
+                    }
+                }).then( (result) => {
                     if (result.data.code === 0) {
-                        alert("");
-                    } else if (result.data.code === 20002) {
-                        alert("");
-                    } else if (result.data.code === 20003) {
-                        alert("");
+                        this.allsign=result.data.data.qrCodes
+                    } else if (result.data.code === 20004) {
+                        console.log("没有发起过签到，试试发起一个新的签到吧");
                     }
                 }).catch(function (reason) {
                     alert("查询失败，网络异常");
@@ -122,8 +122,8 @@
         },
         created: function () {
             console.log(this.teacher)
-            console.log(getCookie('teacher'));
             this.teacher = getCookie('teacher')
+            this.getAllSign()
         }
     })
 
