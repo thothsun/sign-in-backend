@@ -9,9 +9,16 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <style type="text/css">
-        html,
+
         body {
-            height: 100%;
+            padding-top: 4.5rem;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            border: none;
+            width: 100%;
+            resize: none
         }
 
 
@@ -22,56 +29,52 @@
 
     <div id="app" style="text-align: center">
         <h2>{{teacher}}发起的签到</h2>
-        <p>{{allsign}}</p>
 
-        <!--<table class="table table-bordered table-condensed table-hover">-->
-        <!--<tr>-->
-        <!--<th>serial</th>-->
-        <!--<th>description</th>-->
-        <!--<th>qrcode</th>-->
-        <!--</tr>-->
-        <!--<tr v-for="(content,index) in contents">-->
-        <!--<td>{{content.id}}</td>-->
-        <!--<td><textarea v-model="content.wxKey" readonly="readonly"></textarea></td>-->
-        <!--<td><textarea cols="100" rows="5" v-model="content.wxValue"></textarea></td>-->
-        <!--<td style="width: 200px">-->
-        <!--<button class="btn btn-primary" @click="update_content(index)">保存修改</button>-->
-        <!--<button class="btn btn-danger" @click="delete_content(content.wxKey)">删除</button>-->
-        <!--</td>-->
-        <!--</tr>-->
-        <!--</table>-->
-
-        <!--<div class="modal fade" id="modal_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"-->
-        <!--aria-hidden="true">-->
-        <!--<div class="modal-dialog">-->
-        <!--<div class="modal-content">-->
+        <table class="table table-bordered table-condensed table-hover">
+            <tr>
+                <th>serial</th>
+                <th>description</th>
+                <th>qrcode</th>
+            </tr>
+            <tr v-for="(sign,index) in allsign">
+                <td>{{sign.serial}}</td>
+                <td><textarea v-model="sign.description"></textarea></td>
+                <td style="width: 200px">
+                    <button class="btn btn-primary" @click="update_sign(index)">保存修改</button>
+                    <button class="btn btn-danger" @click="delete_sign(content.wxKey)">删除</button>
+                </td>
+            </tr>
+        </table>
 
 
-        <!--<div class="modal-header">-->
-        <!--<h4 class="modal-title" id="myModalLabel1">发起签到</h4>-->
-        <!--</div>-->
-
-        <!--<div id="new_item" class="modal-body">-->
-
-        <!--key：-->
-        <!--<input type="text" v-model="key_new_item" required><br><br>-->
-
-        <!--value：-->
-        <!--<input type="text" v-model="value_new_item" required><br><br>-->
-
-        <!--</div>-->
-
-        <!--<div class="modal-footer">-->
-        <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
-        <!--<button class="btn btn-primary" @click="add_content">保存</button>-->
-        <!--</div>-->
+        <div class="modal fade" id="modal_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
 
 
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel1">发起签到</h4>
+                    </div>
 
-        <!--<button class="btn btn-primary" data-toggle="modal" data-target="#modal_add">发起新的签到</button>-->
+                    <div id="new_item" class="modal-body">
+
+                        description：
+                        <input type="text" v-model="description_new_item" required><br><br>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button class="btn btn-primary" @click="add_content">保存</button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" data-toggle="modal" data-target="#modal_add">发起新的签到</button>
 
     </div>
 
@@ -99,6 +102,7 @@
         data: {
             teacher: '',
             allsign: null,
+            description_new_item: ''
         },
         methods: {
 
@@ -107,9 +111,9 @@
                     params: {
                         teacher: this.teacher
                     }
-                }).then( (result) => {
+                }).then((result) => {
                     if (result.data.code === 0) {
-                        this.allsign=result.data.data.qrCodes
+                        this.allsign = result.data.data.qrCodes
                     } else if (result.data.code === 20004) {
                         console.log("没有发起过签到，试试发起一个新的签到吧");
                     }
@@ -118,6 +122,42 @@
                     console.log(reason);
                 });
             },
+            add_content() {
+                if (checknull()) {
+                    axios.post('/backend/content', {
+                        description: this.description_new_item,
+                    })
+                        .then(function () {
+                            alert("保存成功");
+                            window.location.reload();
+                        })
+                        .catch(function (reason) {
+                            console.log(reason);
+                        });
+                }
+            },
+            update_sign(index) {
+                console.log("点击了保存修改" + index);
+                axios.put('/backend/content', this.contents[index])
+                    .then(function () {
+                        alert("保存成功");
+                        window.location.reload();
+                    })
+                    .catch(function (reason) {
+                        console.log(reason);
+                    })
+            },
+            delete_sign(serial) {
+                if (window.confirm("确认删除？")) {
+                    console.log("点击了删除" + serial);
+                    axios.delete('/backend/content', {params: {serial: serial}})
+                        .then(function () {
+                            alert("删除成功");
+                            window.location.reload();
+                        })
+                }
+
+            }
 
         },
         created: function () {
@@ -126,6 +166,24 @@
             this.getAllSign()
         }
     })
+
+
+    function checknull() {
+        let demo_num = "0";
+        let input_attr = [];
+        $("#new_item").find("input").each(function () {
+            if (!$(this).val()) {
+                demo_num++;
+                input_attr = input_attr.concat($(this).attr("name"));
+            }
+        });
+        if (demo_num > 0) {
+            alert("请填写完整！");
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     function getCookie(name) {
         var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
