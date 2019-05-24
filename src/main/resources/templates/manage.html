@@ -131,13 +131,11 @@
             allsign: null,
             description_new_item: '',
             qrcode_text: 'http://api.ai-developer.net/qrcode/sign',
-            qrcode: new QRCode(document.getElementById("qrcode"), {})
-
         },
         methods: {
 
             view_qrcode: (serial) => {
-                this.qrcode.makeCode(this.qrcode_text + "123");
+                new QRCode(document.getElementById("qrcode"), "http://jindo.dev.naver.com/collie");
             },
 
             view_detail: function (serial) {
