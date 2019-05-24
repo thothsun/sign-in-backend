@@ -18,7 +18,6 @@ public interface QrCodeMapper {
     @Select("select * from tb_qrcode where teacher=#{teacher}")
     List<QrCode> getSign(@Param("teacher") String teacher);
 
-
     @Delete("delete from tb_qrcode where serial=#{serial}")
     Integer deleteSign(@Param("serial") String serial);
 
@@ -27,4 +26,7 @@ public interface QrCodeMapper {
 
     @Insert("insert into tb_qrcode_has_student(qrcode_serial,stu_id,stu_name,stu_openid,state) values(#{serial},#{stuId},#{stuName},#{stuOpenId},#{state}) ")
     Integer addSignStudent(SignStudent signStudent);
+
+    @Select("select * from tb_qrcode_has_student where qrcode_serial=#{serial}")
+    List<SignStudent> getSignStudent(@Param("serial") String serial);
 }

@@ -60,4 +60,10 @@ public class QrCodeService {
             throw new SignNotExistException();
         }
     }
+
+
+    public SignStudentResponse getSignStudent(String serial) throws BaseException{
+        List<SignStudent> signStudents = qrCodeMapper.getSignStudent(serial);
+        return new SignStudentResponse(signStudents);
+    }
 }

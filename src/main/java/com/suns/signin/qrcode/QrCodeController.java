@@ -57,4 +57,10 @@ public class QrCodeController {
         return new Response<>(APICode.SUCCESS);
     }
 
+    @ResponseBody
+    @GetMapping(path = "/signstudent")
+    public Response getSignStudent(@RequestParam("serial") String serial) throws BaseException {
+        return new Response<>(APICode.SUCCESS,qrCodeService.getSignStudent(serial));
+    }
+
 }
