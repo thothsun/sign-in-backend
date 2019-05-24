@@ -21,10 +21,10 @@ public class QrCodeController {
     @ResponseBody
     @PostMapping(path = "/signin")
     public Response signin(@RequestBody Student student, @RequestParam("serial") String serial) throws BaseException {
+        System.out.println("=====");
         String stuID = student.getStuID();
-        String stuName = student.getStuName();
         String openid = student.getOpenid();
-        qrCodeService.signin(stuID, stuName, openid, serial);
+        qrCodeService.signin(serial, stuID, openid);
         return new Response<>(APICode.SUCCESS);
     }
 
@@ -66,7 +66,7 @@ public class QrCodeController {
     @ResponseBody
     @PutMapping(path = "/signstudent")
     public Response updateSignStudent(@RequestBody SignStudentRequestBody signStudentRequestBody) throws BaseException {
-        qrCodeService.updateSignStudent(signStudentRequestBody.getId(),signStudentRequestBody.getSerial(), signStudentRequestBody.getStuId(), signStudentRequestBody.getOpenId(), signStudentRequestBody.getState() );
+        qrCodeService.updateSignStudent(signStudentRequestBody.getId(), signStudentRequestBody.getSerial(), signStudentRequestBody.getStuId(), signStudentRequestBody.getOpenId(), signStudentRequestBody.getState());
         return new Response<>(APICode.SUCCESS);
     }
 

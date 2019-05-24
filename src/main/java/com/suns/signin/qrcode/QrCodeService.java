@@ -18,8 +18,8 @@ public class QrCodeService {
     QrCodeMapper qrCodeMapper;
 
 
-    public void signin(String stuID, String stuName, String openid, String qrcodeSerial) {
-        System.out.println(stuID + "," + stuName + "," + qrcodeSerial);
+    public void signin(String serial, String stuID, String openid) {
+        qrCodeMapper.signIn(serial, stuID, openid, "已签到");
     }
 
 
@@ -68,7 +68,7 @@ public class QrCodeService {
         return new SignStudentResponse(signStudents);
     }
 
-    public void updateSignStudent(String id,String serial, String stuId, String openId, String state) throws BaseException {
-        qrCodeMapper.updateSignStudent(id,serial,stuId,openId,state);
+    public void updateSignStudent(String id, String serial, String stuId, String openId, String state) throws BaseException {
+        qrCodeMapper.updateSignStudent(id, serial, stuId, openId, state);
     }
 }
