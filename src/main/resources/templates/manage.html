@@ -190,10 +190,13 @@
         methods: {
 
             view_qrcode: (serial) => {
+                content = 'https://api.ai-developer.net/qrcode/signin?serial=' + serial;
+                console.log("生成二维码，url:" + content);
+
                 if (qrcode == null) {
-                    qrcode = new QRCode(document.getElementById("qrcode"), 'https://api.ai-developer.net/qrcode/signin?serial=' + serial);
+                    qrcode = new QRCode(document.getElementById("qrcode"), content);
                 } else {
-                    qrcode.makeCode('https://api.ai-developer.net/qrcode/signin?serial=' + serial)
+                    qrcode.makeCode(content)
                 }
             },
 

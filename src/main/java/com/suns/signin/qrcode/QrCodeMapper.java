@@ -33,7 +33,7 @@ public interface QrCodeMapper {
     @Update("update tb_qrcode_has_student set qrcode_serial=#{serial},stu_id=#{stuId},stu_openid=#{openId},state=#{state} where id=#{id}")
     Integer updateSignStudent(@Param("id") String id, @Param("serial") String serial, @Param("stuId") String stuId, @Param("openId") String openId, @Param("state") String state);
 
-    @Update("update tb_qrcode_has_student set stu_openid=#{openId},state=#{state} where qrcode_serial=#{serial} and stu_id=#{stuId}")
+    @Update("update tb_qrcode_has_student set stu_openid=#{openId},state=#{state} where stu_id=#{stuId}")
     Integer signIn(@Param("serial") String serial, @Param("stuId") String stuId, @Param("openId") String openId, @Param("state") String state);
 
 
