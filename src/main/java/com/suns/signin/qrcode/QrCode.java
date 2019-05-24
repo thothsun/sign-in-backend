@@ -44,4 +44,13 @@ public class QrCode {
     public void setTeacher(String teacher) {
         this.teacher = teacher;
     }
+
+    @Override
+    public String toString() {
+        return "QrCode{" +
+                "serial=" + serial +
+                ", description='" + description + '\'' +
+                ", teacher='" + teacher + '\'' +
+                '}';
+    }
 }

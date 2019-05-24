@@ -40,4 +40,13 @@ public class Student {
     public void setOpenid(String openid) {
         this.openid = openid;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "stuID='" + stuID + '\'' +
+                ", stuName='" + stuName + '\'' +
+                ", openid='" + openid + '\'' +
+                '}';
+    }
 }
