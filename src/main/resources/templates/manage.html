@@ -132,6 +132,16 @@
             teacher: '',
             allsign: null,
             description_new_item: '',
+            students_new_item: null
+            // students: [
+            //     {
+            //         "stuID": "2141201",
+            //         "stuName": "zhangsan"
+            //     }, {
+            //         "stuID": "2141202",
+            //         "stuName": "lisi"
+            //     }
+            // ],
         },
         methods: {
 
@@ -166,10 +176,13 @@
             ,
             add_sign() {
                 if (checknull()) {
-                    console.log('添加！')
                     axios.post('/qrcode/sign', {
-                        description: this.description_new_item,
-                        teacher: this.teacher
+                        qrCode: {
+                            description: this.description_new_item,
+                            teacher: this.teacher
+                        },
+                        students: this.students_new_item
+
                     })
                         .then(function () {
                             alert("保存成功");
