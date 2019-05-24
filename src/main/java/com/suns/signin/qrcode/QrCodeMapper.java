@@ -29,4 +29,8 @@ public interface QrCodeMapper {
 
     @Select("select * from tb_qrcode_has_student where qrcode_serial=#{serial}")
     List<SignStudent> getSignStudent(@Param("serial") String serial);
+
+    @Update("update tb_qrcode_has_student set qrcode_serial=#{serial},stu_id=#{stuId},stu_openid=#{openId},state=#{state} where id=#{id}")
+    Integer updateSignStudent(@Param("id") String id, @Param("serial") String serial, @Param("stuId") String stuId, @Param("openId") String openId, @Param("state") String state);
+
 }

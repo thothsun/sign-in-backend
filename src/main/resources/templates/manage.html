@@ -43,7 +43,9 @@
                     <button class="btn btn-primary" data-toggle="modal" data-target="#modal_qrcode"
                             @click="view_qrcode(sign.serial)">二维码
                     </button>
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#modal_detail" @click="view_detail(sign.serial)">详细信息</button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#modal_detail"
+                            @click="view_detail(sign.serial)">详细信息
+                    </button>
                     <button class="btn btn-primary" @click="update_sign(index)">保存修改</button>
                     <button class="btn btn-danger" @click="delete_sign(sign.serial)">删除</button>
                 </td>
@@ -116,16 +118,26 @@
 
                         <table class="table table-bordered table-condensed table-hover" style="margin-top: 20px">
                             <tr>
+                                <th>ID</th>
+                                <th>serial</th>
                                 <th>学号</th>
                                 <th>姓名</th>
                                 <th>openId</th>
                                 <th>签到状态</th>
+                                <th>操作</th>
                             </tr>
                             <tr v-for="(signstudent,index) in allsignstudent">
+                                <td>{{signstudent.id}}</td>
+                                <td>{{signstudent.qrcodeSerial}}</td>
                                 <td>{{signstudent.stuId}}</td>
                                 <td>{{signstudent.stuName}}</td>
                                 <td>{{signstudent.stuOpenId}}</td>
-                                <td>{{signstudent.state}}</td>
+                                <td>
+                                    <input v-model="signstudent.state">
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary" @click="update_signstudent(index)">保存修改</button>
+                                </td>
                             </tr>
                         </table>
 
@@ -268,6 +280,24 @@
                 }
 
             },
+            update_signstudent(index) {
+                console.log(this.allsignstudent[index]);
+                axios.put('/qrcode/signstudent', {
+                    id: this.allsignstudent[index].id,
+                    serial: this.allsignstudent[index].qrcodeSerial,
+                    stuId: this.allsignstudent[index].stuId,
+                    stuName: this.allsignstudent[index].stuName,
+                    stuOpenId: "",
+                    state: this.allsignstudent[index].state
+                })
+                    .then(function () {
+                        alert("保存成功");
+                        window.location.reload();
+                    })
+                    .catch(function (reason) {
+                        console.log(reason);
+                    })
+            }
 
         }
         ,

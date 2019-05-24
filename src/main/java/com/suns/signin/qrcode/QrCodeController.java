@@ -60,7 +60,15 @@ public class QrCodeController {
     @ResponseBody
     @GetMapping(path = "/signstudent")
     public Response getSignStudent(@RequestParam("serial") String serial) throws BaseException {
-        return new Response<>(APICode.SUCCESS,qrCodeService.getSignStudent(serial));
+        return new Response<>(APICode.SUCCESS, qrCodeService.getSignStudent(serial));
     }
+
+    @ResponseBody
+    @PutMapping(path = "/signstudent")
+    public Response updateSignStudent(@RequestBody SignStudentRequestBody signStudentRequestBody) throws BaseException {
+        qrCodeService.updateSignStudent(signStudentRequestBody.getId(),signStudentRequestBody.getSerial(), signStudentRequestBody.getStuId(), signStudentRequestBody.getOpenId(), signStudentRequestBody.getState() );
+        return new Response<>(APICode.SUCCESS);
+    }
+
 
 }

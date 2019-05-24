@@ -4,18 +4,27 @@ package com.suns.signin.qrcode;
  * Created by sunshuai on 2019/5/24
  */
 public class SignStudent {
-    private Integer serial;
+    private Integer id;
+    private Integer qrcodeSerial;
     private String stuId;
     private String stuName;
     private String stuOpenId;
     private String state;
 
-    public Integer getSerial() {
-        return serial;
+    public Integer getQrcodeSerial() {
+        return qrcodeSerial;
     }
 
-    public void setSerial(Integer serial) {
-        this.serial = serial;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setQrcodeSerial(Integer qrcodeSerial) {
+        this.qrcodeSerial = qrcodeSerial;
     }
 
     public String getStuId() {
@@ -48,5 +57,17 @@ public class SignStudent {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    @Override
+    public String toString() {
+        return "SignStudent{" +
+                "id=" + id +
+                ", qrcodeSerial=" + qrcodeSerial +
+                ", stuId='" + stuId + '\'' +
+                ", stuName='" + stuName + '\'' +
+                ", stuOpenId='" + stuOpenId + '\'' +
+                ", state='" + state + '\'' +
+                '}';
     }
 }

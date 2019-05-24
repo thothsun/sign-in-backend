@@ -31,7 +31,7 @@ public class QrCodeService {
         for (Student student : students) {
             SignStudent signStudent = new SignStudent();
             signStudent.setState("未签到");
-            signStudent.setSerial(serial);
+            signStudent.setQrcodeSerial(serial);
             signStudent.setStuId(student.getStuID());
             signStudent.setStuName(student.getStuName());
             signStudent.setStuOpenId(student.getOpenid());
@@ -62,8 +62,13 @@ public class QrCodeService {
     }
 
 
-    public SignStudentResponse getSignStudent(String serial) throws BaseException{
+    public SignStudentResponse getSignStudent(String serial) throws BaseException {
         List<SignStudent> signStudents = qrCodeMapper.getSignStudent(serial);
+        System.out.println(signStudents);
         return new SignStudentResponse(signStudents);
+    }
+
+    public void updateSignStudent(String id,String serial, String stuId, String openId, String state) throws BaseException {
+        qrCodeMapper.updateSignStudent(id,serial,stuId,openId,state);
     }
 }
