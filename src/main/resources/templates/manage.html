@@ -87,7 +87,7 @@
                         <h4 class="modal-title" id="myModalLabel2">请学生们扫描二维码</h4>
                     </div>
 
-                    <div class="modal-body" style="text-align: center">
+                    <div class="modal-body">
 
                         <div id="qrcode"></div>
 
@@ -107,7 +107,7 @@
 
 </main>
 
-<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
@@ -124,18 +124,23 @@
 <script type="text/javascript">
 
 
+    let qrcode;
+
     new Vue({
         el: '#app',
         data: {
             teacher: '',
             allsign: null,
             description_new_item: '',
-            qrcode_text: 'http://api.ai-developer.net/qrcode/sign',
         },
         methods: {
 
             view_qrcode: (serial) => {
-                new QRCode(document.getElementById("qrcode"), "http://jindo.dev.naver.com/collie");
+                if (qrcode == null) {
+                    qrcode = new QRCode(document.getElementById("qrcode"), 'http://api.ai-developer.net/qrcode/signin?serial=' + serial);
+                } else {
+                    qrcode.makeCode('http://api.ai-developer.net/qrcode/signin?serial=' + serial)
+                }
             },
 
             view_detail: function (serial) {
