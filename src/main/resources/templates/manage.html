@@ -61,10 +61,13 @@
                         <h4 class="modal-title" id="myModalLabel1">发起签到</h4>
                     </div>
 
-                    <div id="new_item" class="modal-body">
+                    <div id="new_item" class="modal-body" style="text-align: left">
 
                         请填写签到描述：
                         <input type="text" v-model="description_new_item" required><br><br>
+                        请上传学生名单：
+                        <input type="file" accept=".text/csv">
+
 
                     </div>
 
@@ -147,9 +150,9 @@
 
             view_qrcode: (serial) => {
                 if (qrcode == null) {
-                    qrcode = new QRCode(document.getElementById("qrcode"), 'http://api.ai-developer.net/qrcode/signin?serial=' + serial);
+                    qrcode = new QRCode(document.getElementById("qrcode"), 'https://api.ai-developer.net/qrcode/signin?serial=' + serial);
                 } else {
-                    qrcode.makeCode('http://api.ai-developer.net/qrcode/signin?serial=' + serial)
+                    qrcode.makeCode('https://api.ai-developer.net/qrcode/signin?serial=' + serial)
                 }
             },
 
