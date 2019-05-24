@@ -32,8 +32,8 @@ public class QrCodeController {
     //教师发起新的签到
     @ResponseBody
     @PostMapping(path = "/sign")
-    public Response addSign(@RequestBody QrCode qrCode) {
-        return new Response<>(APICode.SUCCESS, qrCodeService.addSign(qrCode));
+    public Response addSign(@RequestBody SignRequestBody signRequestBody) {
+        return new Response<>(APICode.SUCCESS, qrCodeService.addSign(signRequestBody));
     }
 
     //教师查询所有的签到

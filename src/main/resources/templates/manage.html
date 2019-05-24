@@ -28,7 +28,7 @@
 <main role="main" class="container">
 
     <div id="app" style="text-align: center">
-        <h2>{{teacher}}发起的签到</h2>
+        <h4>教师【{{teacher}}】发起的签到</h4>
 
         <table class="table table-bordered table-condensed table-hover" style="margin-top: 20px">
             <tr>
@@ -63,7 +63,7 @@
 
                     <div id="new_item" class="modal-body">
 
-                        description：
+                        请填写签到描述：
                         <input type="text" v-model="description_new_item" required><br><br>
 
                     </div>
@@ -84,7 +84,7 @@
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel2">请学生们扫描二维码</h4>
+                        <h4 class="modal-title" id="myModalLabel2">请学生们扫描二维码签到</h4>
                     </div>
 
                     <div class="modal-body">
@@ -191,8 +191,7 @@
                     .catch(function (reason) {
                         console.log(reason);
                     })
-            }
-            ,
+            },
             delete_sign(serial) {
                 if (window.confirm("确认删除？")) {
                     console.log("点击了删除" + serial);

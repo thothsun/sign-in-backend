@@ -23,9 +23,9 @@ public class QrCodeService {
     }
 
 
-    public SerialResponse addSign(QrCode qrCode) {
-        qrCodeMapper.addSign(qrCode);
-        return new SerialResponse(qrCode.getSerial());
+    public SerialResponse addSign(SignRequestBody signRequestBody) {
+        qrCodeMapper.addSign(signRequestBody.getQrCode());
+        return new SerialResponse(signRequestBody.getQrCode().getSerial());
     }
 
 
