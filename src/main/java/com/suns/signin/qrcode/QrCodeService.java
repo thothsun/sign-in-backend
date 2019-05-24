@@ -24,8 +24,10 @@ public class QrCodeService {
 
 
     public SerialResponse addSign(SignRequestBody signRequestBody) {
-        qrCodeMapper.addSign(signRequestBody.getQrCode());
-        Integer serial = signRequestBody.getQrCode().getSerial();
+        QrCode qrCode = signRequestBody.getQrCode();
+        qrCodeMapper.addSign(qrCode);
+        Integer serial = qrCode.getSerial();
+        System.out.println(serial);
         List<Student> students = signRequestBody.getStudents();
 
         for (Student student : students) {

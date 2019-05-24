@@ -24,7 +24,7 @@ public interface QrCodeMapper {
     @Update("update tb_qrcode set description=#{description} where serial=#{serial}")
     Integer updateSign(QrCode qrCode);
 
-    @Insert("insert into tb_qrcode_has_student(qrcode_serial,stu_id,stu_name,stu_openid,state) values(#{serial},#{stuId},#{stuName},#{stuOpenId},#{state}) ")
+    @Insert("insert into tb_qrcode_has_student(qrcode_serial,stu_id,stu_name,stu_openid,state) values(#{qrcodeSerial},#{stuId},#{stuName},#{stuOpenId},#{state}) ")
     Integer addSignStudent(SignStudent signStudent);
 
     @Select("select * from tb_qrcode_has_student where qrcode_serial=#{serial}")
