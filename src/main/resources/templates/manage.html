@@ -29,6 +29,7 @@
 
     <div id="app" style="text-align: center">
         <h4>教师【{{teacher}}】发起的签到</h4>
+    <p>{{students_new_item}}</p>
 
         <table class="table table-bordered table-condensed table-hover" style="margin-top: 20px">
             <tr>
@@ -66,7 +67,7 @@
                         请填写签到描述：
                         <input type="text" v-model="description_new_item" required><br><br>
                         请上传学生名单：
-                        <input type="file" accept=".text/csv">
+                        <input type="file" id="upload_file" accept="text/csv">
 
 
                     </div>
@@ -119,6 +120,7 @@
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.bootcss.com/PapaParse/4.6.3/papaparse.js"></script>
 <script th:src="@{/qrcode.js}"></script>
 
 </body>
@@ -179,6 +181,18 @@
             ,
             add_sign() {
                 if (checknull()) {
+                    let file = document.getElementById("upload_file").files[0];
+                    Papa.parse(file, {
+                        header: true,
+                        complete: (results) => {
+                            console.log(results.data);
+                            this.students_new_item = results.data
+                        },
+                        error: function (e) {
+                            console.log(e)
+                        }
+                    });
+
                     axios.post('/qrcode/sign', {
                         qrCode: {
                             description: this.description_new_item,
@@ -186,14 +200,12 @@
                         },
                         students: this.students_new_item
 
-                    })
-                        .then(function () {
-                            alert("保存成功");
-                            window.location.reload();
-                        })
-                        .catch(function (reason) {
-                            console.log(reason);
-                        });
+                    }).then(function () {
+                        alert("保存成功");
+                        window.location.reload();
+                    }).catch(function (reason) {
+                        console.log(reason);
+                    });
                 }
             }
             ,
