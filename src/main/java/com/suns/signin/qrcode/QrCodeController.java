@@ -33,7 +33,6 @@ public class QrCodeController {
     @ResponseBody
     @PostMapping(path = "/sign")
     public Response addSign(@RequestBody SignRequestBody signRequestBody) {
-        System.out.println(signRequestBody);
         return new Response<>(APICode.SUCCESS, qrCodeService.addSign(signRequestBody));
     }
 
