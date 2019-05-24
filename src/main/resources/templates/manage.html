@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>签到管理</title>
@@ -30,16 +30,20 @@
     <div id="app" style="text-align: center">
         <h2>{{teacher}}发起的签到</h2>
 
-        <table class="table table-bordered table-condensed table-hover">
+        <table class="table table-bordered table-condensed table-hover" style="margin-top: 20px">
             <tr>
-                <th>serial</th>
-                <th>description</th>
-                <th>qrcode</th>
+                <th>ID</th>
+                <th>描述</th>
+                <th>操作</th>
             </tr>
             <tr v-for="(sign,index) in allsign">
                 <td>{{sign.serial}}</td>
                 <td><textarea v-model="sign.description"></textarea></td>
-                <td style="width: 200px">
+                <td style="width: 400px">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#modal_qrcode"
+                            @click="view_qrcode(sign.serial)">二维码
+                    </button>
+                    <button class="btn btn-primary" @click="view_detail(sign.serial)">详细信息</button>
                     <button class="btn btn-primary" @click="update_sign(index)">保存修改</button>
                     <button class="btn btn-danger" @click="delete_sign(sign.serial)">删除</button>
                 </td>
@@ -74,6 +78,28 @@
             </div>
         </div>
 
+        <div class="modal fade" id="modal_qrcode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel2">请学生们扫描二维码</h4>
+                    </div>
+
+                    <div class="modal-body" style="text-align: center">
+
+                        <div id="qrcode"></div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <button class="btn btn-primary" data-toggle="modal" data-target="#modal_add">发起新的签到</button>
 
     </div>
@@ -90,6 +116,7 @@
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script th:src="@{/qrcode.js}"></script>
 
 </body>
 </html>
@@ -102,10 +129,21 @@
         data: {
             teacher: '',
             allsign: null,
-            description_new_item: ''
+            description_new_item: '',
+            qrcode_text: 'http://api.ai-developer.net/qrcode/sign',
+            qrcode: new QRCode(document.getElementById("qrcode"), {})
+
         },
         methods: {
 
+            view_qrcode: (serial) => {
+                this.qrcode.makeCode(this.qrcode_text + "123");
+            },
+
+            view_detail: function (serial) {
+
+            }
+            ,
             getAllSign: function () {
                 axios.get('/qrcode/sign', {
                     params: {
@@ -121,7 +159,8 @@
                     alert("查询失败，网络异常");
                     console.log(reason);
                 });
-            },
+            }
+            ,
             add_sign() {
                 if (checknull()) {
                     console.log('添加！')
@@ -137,7 +176,8 @@
                             console.log(reason);
                         });
                 }
-            },
+            }
+            ,
             update_sign(index) {
                 console.log("点击了保存修改" + index);
                 axios.put('/qrcode/sign', this.allsign[index])
@@ -148,7 +188,8 @@
                     .catch(function (reason) {
                         console.log(reason);
                     })
-            },
+            }
+            ,
             delete_sign(serial) {
                 if (window.confirm("确认删除？")) {
                     console.log("点击了删除" + serial);
@@ -161,7 +202,8 @@
 
             }
 
-        },
+        }
+        ,
         created: function () {
             console.log(this.teacher)
             this.teacher = getCookie('teacher')
