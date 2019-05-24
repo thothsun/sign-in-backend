@@ -16,12 +16,6 @@ public class QrCodeController {
     @Autowired
     private QrCodeService qrCodeService;
 
-    //教师发起新的签到
-    @GetMapping(path = "/serial")
-    @ResponseBody
-    public Response getQrCodeSerial(@RequestParam("description") String description) {
-        return new Response<>(APICode.SUCCESS, qrCodeService.getQrCodeSerial(description));
-    }
 
     //学生扫码签到
     @ResponseBody
@@ -34,10 +28,33 @@ public class QrCodeController {
         return new Response<>(APICode.SUCCESS);
     }
 
-    //教师查询所有的签到
-    @GetMapping(path = "/all")
+
+    //教师发起新的签到
     @ResponseBody
-    public Response getAllSign(@RequestParam("teacher") String teacher) throws BaseException{
-        return new Response<>(APICode.SUCCESS,qrCodeService.getAllSign(teacher));
+    @PostMapping(path = "/sign")
+    public Response addSign(@RequestBody QrCode qrCode) {
+        return new Response<>(APICode.SUCCESS, qrCodeService.addSign(qrCode));
     }
+
+    //教师查询所有的签到
+    @ResponseBody
+    @GetMapping(path = "/sign")
+    public Response getSign(@RequestParam("teacher") String teacher) throws BaseException {
+        return new Response<>(APICode.SUCCESS, qrCodeService.getSign(teacher));
+    }
+
+    @ResponseBody
+    @DeleteMapping(path = "/sign")
+    public Response deleteSign(@RequestParam("serial") String serial) throws BaseException {
+        qrCodeService.deleteSign(serial);
+        return new Response<>(APICode.SUCCESS);
+    }
+
+    @ResponseBody
+    @PutMapping(path = "/sign")
+    public Response updateSign(@RequestBody QrCode qrCode) throws BaseException {
+        qrCodeService.updateSign(qrCode);
+        return new Response<>(APICode.SUCCESS);
+    }
+
 }

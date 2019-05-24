@@ -41,7 +41,7 @@
                 <td><textarea v-model="sign.description"></textarea></td>
                 <td style="width: 200px">
                     <button class="btn btn-primary" @click="update_sign(index)">保存修改</button>
-                    <button class="btn btn-danger" @click="delete_sign(content.wxKey)">删除</button>
+                    <button class="btn btn-danger" @click="delete_sign(sign.serial)">删除</button>
                 </td>
             </tr>
         </table>
@@ -66,7 +66,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button class="btn btn-primary" @click="add_content">保存</button>
+                        <button class="btn btn-primary" @click="add_sign">保存</button>
                     </div>
 
 
@@ -107,7 +107,7 @@
         methods: {
 
             getAllSign: function () {
-                axios.get('/qrcode/all', {
+                axios.get('/qrcode/sign', {
                     params: {
                         teacher: this.teacher
                     }
@@ -122,10 +122,12 @@
                     console.log(reason);
                 });
             },
-            add_content() {
+            add_sign() {
                 if (checknull()) {
-                    axios.post('/backend/content', {
+                    console.log('添加！')
+                    axios.post('/qrcode/sign', {
                         description: this.description_new_item,
+                        teacher: this.teacher
                     })
                         .then(function () {
                             alert("保存成功");
@@ -138,7 +140,7 @@
             },
             update_sign(index) {
                 console.log("点击了保存修改" + index);
-                axios.put('/backend/content', this.contents[index])
+                axios.put('/qrcode/sign', this.allsign[index])
                     .then(function () {
                         alert("保存成功");
                         window.location.reload();
@@ -150,7 +152,7 @@
             delete_sign(serial) {
                 if (window.confirm("确认删除？")) {
                     console.log("点击了删除" + serial);
-                    axios.delete('/backend/content', {params: {serial: serial}})
+                    axios.delete('/qrcode/sign', {params: {serial: serial}})
                         .then(function () {
                             alert("删除成功");
                             window.location.reload();

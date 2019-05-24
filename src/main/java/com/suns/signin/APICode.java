@@ -11,5 +11,6 @@ public final class APICode {
     public static final int TEACHER_NOT_EXIST = 20002;
     public static final int TEACHER_PASSWORD_ERROR = 20003;
     public static final int TEACHER_HAS_NO_SIGN = 20004;
+    public static final int SIGN_NOT_EXIST = 20005;
 
 }
