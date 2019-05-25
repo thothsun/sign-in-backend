@@ -19,6 +19,7 @@ public class QrCodeService {
 
 
     public void signin(String serial, String stuID, String openid) {
+        System.out.println(serial+","+stuID+","+openid);
         qrCodeMapper.signIn(serial, stuID, openid, "已签到");
     }
 

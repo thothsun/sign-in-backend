@@ -21,7 +21,7 @@ public class QrCodeController {
     @ResponseBody
     @PostMapping(path = "/signin")
     public Response signin(@RequestBody Student student, @RequestParam("serial") String serial) throws BaseException {
-        System.out.println("=====");
+        System.out.println("====="+student);
         String stuID = student.getStuID();
         String openid = student.getOpenid();
         qrCodeService.signin(serial, stuID, openid);
